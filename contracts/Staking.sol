@@ -58,7 +58,7 @@ contract Staking is Initializable,IStakeable {
         return stakers[stakerAddr];
     }
 
-    function userBalance(address addr) external view returns(uint256) {
+    function userBalance(address addr) public view returns(uint256) {
         return token.balanceOf(addr);
     } 
 
@@ -72,9 +72,10 @@ contract Staking is Initializable,IStakeable {
 
     /** claim user token */
     function claim() external override {
-        uint256 balance = contractBalance(address(this));
+        uint256 balance = userBalance(address(this));
         uint256 reward = _calculateReward(msg.sender);
         require(balance > reward, "insufficent funds.");
+
         token.transfer(msg.sender, reward);
         _unstake(msg.sender);
     }
@@ -109,11 +110,6 @@ contract Staking is Initializable,IStakeable {
 
 
         return staker.amount + (staker.amount * REWARD_PERCENTAGE / 100);
-    }
-
-    /**show contract balance */
-    function contractBalance(address addr) public view returns(uint256) {
-        return address(addr).balance;
     }
 
 }

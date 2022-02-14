@@ -10,7 +10,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 // 3 ayliq olsun
 // penalty mebleg gune gore hesablasin
 //trasnfer metodu olsun hansiki contract balancedan shirket hesabina metolari qaytarsin
-contract Staking is Initializable, IStakeable {
+contract StakingM6 is Initializable, IStakeable {
     Metafluence public token;
     address private _owner;
 
@@ -24,7 +24,7 @@ contract Staking is Initializable, IStakeable {
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
     uint constant REWARD_DEADLINE_DAYS = 30; //stake time with days
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds //3 hours now
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds //3 hours now
     uint constant MAX_SUPPLIED = 10000000000000000000000000; //keep maximum supplied tokens count
     uint constant MIN_SUPPLIED = 5000; //keep minimum amount of supplied token
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Metafluence token address

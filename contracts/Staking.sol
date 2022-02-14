@@ -21,12 +21,16 @@ contract Staking is Initializable, IStakeable {
 
     uint256 public totalSupplied;
     uint constant CODE_NOT_FOUND = 9999999;
+
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
-    uint constant REWARD_DEADLINE_DAYS = 30; //stake time with days
+
+    uint constant REWARD_DEADLINE_DAYS = 90; //stake time with days
     uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds //3 hours now
-    uint constant MAX_SUPPLIED = 10000000000000000000000000; //keep maximum supplied tokens count
-    uint constant MIN_SUPPLIED = 5000; //keep minimum amount of supplied token
+
+    uint constant MAX_SUPPLIED = 10_000_000 * 10 ** 18; //keep maximum supplied tokens count 10_000_000 METO
+    uint constant MIN_SUPPLIED = 5000 * 10 ** 18 ; //keep minimum amount of supplied token 5000 METO
+
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Metafluence token address
     address payable bank;
 
@@ -153,8 +157,12 @@ contract Staking is Initializable, IStakeable {
     /**
     * caclulate any staking model penalty which implement IStakable interface
     */
-    function _calcPenalty(Staker memory request, uint secondsStaked) internal pure returns(uint) {
-        uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_SECONDS * secondsStaked);
+    function _calcPenalty(Staker memory request, uint secondStaked) internal pure returns(uint) {
+
+        uint hourStaked = secondStaked / 60 * 60;
+        uint REWARD_DEADLINE_HOURS = REWARD_DEADLINE_SECONDS / 60 * 60;
+
+        uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_HOURS * hourStaked);
         return request.amount - (request.amount * percent / 100);
     }
 }

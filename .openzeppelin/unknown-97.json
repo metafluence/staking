@@ -364,6 +364,71 @@
       "address": "0x3ABC2Af0a66298E43917A142ed376c26e6e12951",
       "txHash": "0xd6a54ab410ab0c45e696d6b9f4e8ac9e4c8918328bc509113cd21ad14b0040f2",
       "kind": "transparent"
+    },
+    {
+      "address": "0x75eAc33f870EE2887b8D254C688a3AC27A460BD3",
+      "txHash": "0x38c035e6371ba5b1e70f7215aa5500661d9b0ad73833f049fdc84d7f49c52e46",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x8db9450be5E7E084c5D119F3540eA8BD0aAb6720",
+      "txHash": "0x63777f1a96feaa72b54be151a0499d739171716fb5cd3c2e0408eee89854b72d",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9F01CcbD97eDB8624f5Bfe38151540e743E3801B",
+      "txHash": "0xcc1622bd8751dbf61430122ef075111b486a36859dee473b97d2dc2e6c09c2df",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xAD1Ba98a592E7b34dA494f8F05a757016833afde",
+      "txHash": "0x49dcd904c2ecbbb33fcc6fdf30cb467b60b942a7e02edd8147b4fa6e4449c9c7",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa2Ca2A4EE3bF200F0986a6dDa4aD8733913B665d",
+      "txHash": "0x7b19b50848115262dec0857f3935f1dcad5825a97d07d16ea134935337c1520c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xb56ffdf46955A9CB379985aF5Ecb872EE5548e5a",
+      "txHash": "0x5dd3579649b3a5dfe71e59a1f5fc34ebeef8aebe0a6ee97fcfcd766e91cd4bd8",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xaB0b4A9799B9Ab461Cf19a63E2366776929bfa90",
+      "txHash": "0x7b6a59d33fb8e589a62a5aeb9eeb4c543e57d50838774ea0216ba2a7a4b5f7ac",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5b655735DE0d77393b9fEdd0D002e88432B2ADF8",
+      "txHash": "0xb7848bb63a7709227416e8488f5fc287575b4a0ddcc6f541d72c19a878bfb371",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xa3a4832df91bd3605981607C8f1C129889a447a8",
+      "txHash": "0xb4a5e428f61f83d271d881d4db9e8600a5077268abc28929bc3f60b094226ee9",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x14b7cFfbF4a1Baa243D31Ae17aEa43482b72bd4A",
+      "txHash": "0x83dce69e641def9ecf00b03bc0066a4daaa0a73d949f1e7296563c94b634f093",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7862AaD49fa45409def1a8a8c8FFc739c4e09D33",
+      "txHash": "0xc6e30eb37ecdda04e4fbbecd54d3628be6fd075d2de09a1559fdfc8d36d36109",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x304B37b8Bda9554c59abFE326FFD0594F63A29a2",
+      "txHash": "0x177fbb1a63db367d257f1f80b9778d27601904dc2a19b4dbc664a18e29d9a97c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xb8EB32539267365E97112bb671bcbf7537163c74",
+      "txHash": "0xcc845c90958e2f6ff84c21828d64873994bd8b6cffc43689422844b26680be3a",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -5136,6 +5201,1266 @@
             "label": "struct StakingM6.Staker[]"
           },
           "t_struct(Staker)1594_storage": {
+            "label": "struct StakingM6.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "a270d03250abaacb7db6bfca127bdc482eb1cc76c6c054c7a1dd75c60df985de": {
+      "address": "0x968bc50A85b52B08d9E985ef3d6af76F70124b9c",
+      "txHash": "0x85796aef25be92720a0e2e7a289e77b565c3cd97e2e2a7d71cb59470669bcc60",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/StakingM6.sol:14"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/StakingM6.sol:15"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/StakingM6.sol:22"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/StakingM6.sol:37"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/StakingM6.sol:45"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct StakingM6.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct StakingM6.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct StakingM6.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "b2f1f3ec6ef9d3d8d55cb59fa8e361d9133b3391ed9292c4bff397eb8b58c610": {
+      "address": "0xd9Af2Ea4155a1353a092d5be045f1f1d705293Ca",
+      "txHash": "0xfca064795b1f6b75f5ac2fe75f8f49b3e4e014afaf122a1255bc47286be2842e",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:35"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1048_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:43"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1048_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1048_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1048_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "2122a400abcc6de635f5531dce3d1b03d32de6ae4186408e2b803194a7bf4965": {
+      "address": "0x2675e54EA8844FaA634D5A94F1CD13623eBc3E22",
+      "txHash": "0xb7f721efd295de468640a356c84542696e68d44a64333ba193c6e27849210ad2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/StakingM6.sol:14"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/StakingM6.sol:15"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/StakingM6.sol:22"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/StakingM6.sol:37"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1629_storage)dyn_storage)",
+            "src": "contracts/StakingM6.sol:45"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1629_storage)dyn_storage)": {
+            "label": "mapping(address => struct StakingM6.Staker[])"
+          },
+          "t_array(t_struct(Staker)1629_storage)dyn_storage": {
+            "label": "struct StakingM6.Staker[]"
+          },
+          "t_struct(Staker)1629_storage": {
+            "label": "struct StakingM6.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "c0bb42089296d2d2f2bbf886e59e20df9d3402e6a9110877b5d4bda29e8f6b2c": {
+      "address": "0x831Dc6f41fbf1f46E2cB2386590f709eC3A6d968",
+      "txHash": "0x590c13a57188a47763e7aea020a7d74e6cc231c1ab717a986de9a05c71c4d780",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20)968",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:16"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:23"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1127_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20)968": {
+            "label": "contract IERC20"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1127_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1127_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1127_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "529d63b2860fd75a2f7e47e4545a6eb9131c896cfdcae16b19ccccd05dcc9b97": {
+      "address": "0xcdEF113DD66Fd4d705bC67D58F2449253ea7212A",
+      "txHash": "0xe56af6c41ed0fc2f2363515b4284609e4b22f71dc87846eb2d51cd0c59e5c091",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "919307c5e5fe50dca0c87095c5e7372707e160bdf3429d1eb0f842930b611be4": {
+      "address": "0x7C9b2B2F80273d9f5676287D4eb53a11D0266281",
+      "txHash": "0xce06e9ad55521ed27baede1900e59175b408bb6a91a0c893853fd352905d019b",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "731d13b5cabe4cae51db9b454844df57bf3d0b10c097ca51335af250109d2f1f": {
+      "address": "0xd60aC03a2B9CC809aF04C5eFF31AceaFbc85b783",
+      "txHash": "0x380f6dfbb10efb668c0bb6bd99413cfc4baecc1e2ffb563b6afb09ad1beeff08",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "0987953a8bbec02f30d9f44a90c5aaf3c911deda56609abba322999a5f07ed26": {
+      "address": "0x80b9c616A4b4Dab5Ed81E4C2847DD37dbeb23F85",
+      "txHash": "0xe01d761abeb834e278b27b813168a88d9a77bc2edfc792ffeef7cb775d1008b7",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "43293d760b909b14e7aa2684e8bd6216e67d3339aad911622cd4e98a020543b7": {
+      "address": "0xf0ff6A0a044c19eDefa6bed6D8221ac34fd7260e",
+      "txHash": "0xaea4f1fd208b44f7eaab0d376618eeeb982968c2d6ee8879ca629d79821ada96",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "31a2fe68317cdd628a616cf186b2ea6d0eddc8fd70983609f5c775bccfd11c79": {
+      "address": "0xef1F23BB4E522f66151d02d178c5409d306Aaad3",
+      "txHash": "0x09b83aa8a7638b97e5d5b482df2f8b22a0875c5b01332728ae4d4a83fa1f01e2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "8e01086664a0806fdd31c3324fe06b450793b918df353c5e37a2096c91c244aa": {
+      "address": "0x13e5971bB39f0403Aa71Aa0F5177212731186c8C",
+      "txHash": "0x59c4aa54524374f62464c7b30998e17168cf6ab9ca55d7b53626c08e554d6c67",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "18ca1f2bb99014b0c93d023c29343f9963fdcc685d5cd7aab04bd602fbb232f4": {
+      "address": "0xeaB75bfB653022514840755fB9650014A8b1Fd65",
+      "txHash": "0x4b35134b8588ca5e179c3a29236b60ad6fdb5e38351a074e6f5000b12ab68ebb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:14"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:15"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:36"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:44"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1044_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1044_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1044_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "484e0cb86adc287cf401dbbe4afc9ccc1387f05aa4bcc9d46fb883cbeab1a195": {
+      "address": "0x9399A1011f1562669ADfA9eeD80C52852C72E26A",
+      "txHash": "0xa20102b0d4fa3097398230b8be6a3f1e9d82845378fdc88fd73f705fb35d623b",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/Staking.sol:9"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:10"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:17"
+          },
+          {
+            "contract": "Staking",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:30"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1048_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:38"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1048_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)1048_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)1048_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "9e6668f24e86fb08b1d8891d829e2366119d3c4ef62e8c792678614dab579361": {
+      "address": "0xc321E9eAd68386875eB23edE1D88098fcD684d79",
+      "txHash": "0xb3997d1b5bbc39c3f09e5bae1e44e7e3347cdcdd04700ce89cd182418b2c0a93",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "token",
+            "type": "t_contract(Metafluence)977",
+            "src": "contracts/StakingM6.sol:10"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/StakingM6.sol:11"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "totalSupplied",
+            "type": "t_uint256",
+            "src": "contracts/StakingM6.sol:18"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "bank",
+            "type": "t_address_payable",
+            "src": "contracts/StakingM6.sol:32"
+          },
+          {
+            "contract": "StakingM6",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)1648_storage)dyn_storage)",
+            "src": "contracts/StakingM6.sol:40"
+          }
+        ],
+        "types": {
+          "t_contract(Metafluence)977": {
+            "label": "contract Metafluence"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)1648_storage)dyn_storage)": {
+            "label": "mapping(address => struct StakingM6.Staker[])"
+          },
+          "t_array(t_struct(Staker)1648_storage)dyn_storage": {
+            "label": "struct StakingM6.Staker[]"
+          },
+          "t_struct(Staker)1648_storage": {
             "label": "struct StakingM6.Staker",
             "members": [
               {

@@ -5,11 +5,7 @@ import "./Metafluence.sol";
 import "./IStakeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-// 3saatliq et heleki
-// eynisin 6 saatligin edek
-// 3 ayliq olsun
-// penalty mebleg gune gore hesablasin
-//trasnfer metodu olsun hansiki contract balancedan shirket hesabina metolari qaytarsin
+
 contract StakingM6 is Initializable, IStakeable {
     Metafluence public token;
     address private _owner;
@@ -30,6 +26,7 @@ contract StakingM6 is Initializable, IStakeable {
 
     uint constant MAX_SUPPLIED = 10_000_000 * 10 ** 18; //keep maximum supplied tokens count 10_000_000 METO
     uint constant MIN_SUPPLIED = 5000 * 10 ** 18 ; //keep minimum amount of supplied token 5000 METO
+
 
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Metafluence token address
     address payable bank;
@@ -74,7 +71,7 @@ contract StakingM6 is Initializable, IStakeable {
         return token.balanceOf(addr);
     } 
 
-    function approve(address _from, uint256 _amount) external {
+    function _approve(address _from, uint256 _amount) internal onlyOwner {
         token.approve(_from, _amount);
     }
     
@@ -85,10 +82,11 @@ contract StakingM6 is Initializable, IStakeable {
     /** claim user token */
     function claim(uint _id) external override {
         uint256 balance = userBalance(address(this));
-        uint256 amount = calculateTransferAmount(msg.sender, _id);
-        require(balance > amount, "insufficent funds.");
+        (uint256 rewardedAmount, uint256 amount) = calculateTransferAmount(msg.sender, _id);
+        require(balance > rewardedAmount, "insufficent funds.");
 
-        token.transfer(msg.sender, amount);
+        token.transfer(msg.sender, rewardedAmount);
+        totalSupplied -= amount;
         _unstake(msg.sender, _id);
     }
 
@@ -101,11 +99,11 @@ contract StakingM6 is Initializable, IStakeable {
     }
 
     /** caluclate staker reward internally */
-    function calculateTransferAmount(address _staker, uint _id) public view returns(uint256) {
+    function calculateTransferAmount(address _staker, uint _id) public view returns(uint256, uint256) {
         (Staker memory staker, uint index) = getStakeById(_staker, _id);
 
         if (index == CODE_NOT_FOUND) {
-            return 0;
+            return (0, 0);
         }
 
         uint256 currentTime = block.timestamp;
@@ -113,11 +111,11 @@ contract StakingM6 is Initializable, IStakeable {
         uint256 secondsStaked = currentTime - staker.stakedAt;
         
         if (secondsStaked < REWARD_DEADLINE_SECONDS) {
-            return _calcPenalty(staker, secondsStaked);
+            return (_calcPenalty(staker, secondsStaked), staker.amount);
         }
 
 
-        return _calcReward(staker);
+        return (_calcReward(staker), staker.amount);
 
     }
 
@@ -164,5 +162,13 @@ contract StakingM6 is Initializable, IStakeable {
 
         uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_HOURS * hourStaked);
         return request.amount - (request.amount * percent / 100);
+    }
+
+    /**
+    * withdraw contract balance to owner account
+     */
+    function withdraw() external onlyOwner {
+        _approve(address(this), userBalance(address(this)));
+        token.transferFrom(address(this), bank, userBalance(address(this)));
     }
 }

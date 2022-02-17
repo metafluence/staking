@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./Metafluence.sol";
 import "./IStakeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+
 
 contract Staking is Initializable, IStakeable {
-    Metafluence public token;
+    IERC20Upgradeable public token;
     address private _owner;
 
     modifier onlyOwner {
@@ -14,20 +15,20 @@ contract Staking is Initializable, IStakeable {
         _;
     }
 
-    uint256 public totalSupplied;
+    uint256 public totalStaked;
     uint constant CODE_NOT_FOUND = 9999999;
 
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    uint constant REWARD_DEADLINE_DAYS = 90; //stake time with days
     uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds //3 hours now
 
-    uint constant MAX_SUPPLIED = 10_000_000 * 10 ** 18; //keep maximum supplied tokens count 10_000_000 METO
-    uint constant MIN_SUPPLIED = 5000 * 10 ** 18 ; //keep minimum amount of supplied token 5000 METO
+    uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
+    uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
 
-    address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Metafluence token address
-    address payable bank;
+    address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
+    address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
 
     struct Staker {
         uint256 amount;
@@ -39,25 +40,26 @@ contract Staking is Initializable, IStakeable {
 
     function initialize() public initializer {
         _owner = msg.sender;
-        token = Metafluence(TOKEN_CONTRACT_ADDRESS);
-        bank = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F); //bank address which withdraw money
+        token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
+        staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
     }
 
     /** add new staker */
     function stake(uint256 _amount) external override {
-        require(_amount >= MIN_SUPPLIED,  "staked amount must be greate or equal MIN_SUPPLIED stake value(5000)");
-        require(totalSupplied +  _amount <= MAX_SUPPLIED, "reach MAX suplied amount. (10000000000000000000000000)");
-
+        require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
+        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
+        require(userTotalStakedAmount(msg.sender) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
         Staker memory st = Staker(_amount, 0, block.timestamp);
         
         token.transferFrom(msg.sender, address(this), _amount);
         st.reward = _calcReward(st);
         stakers[msg.sender].push(st);
-        totalSupplied += _amount;
+        totalStaked += _amount;
         emit Stake(msg.sender, _amount);
     }
 
-    function findStaker(address stakerAddr)
+    /** retrieve user stakes */
+    function myStakes(address stakerAddr)
         external
         view
         returns (Staker [] memory)
@@ -65,32 +67,42 @@ contract Staking is Initializable, IStakeable {
         return stakers[stakerAddr];
     }
 
+    /** retrieve user balance from token contract */
     function userBalance(address addr) public view returns(uint256) {
         return token.balanceOf(addr);
-    } 
+    }
+    
+    /** find user total staked amount */
+    function userTotalStakedAmount(address stakerAddr) public view returns(uint256) {
+        uint256 total;
+        Staker [] memory stakes = stakers[stakerAddr];
+        for (uint i = 0; i < stakes.length; i++) {
+            total += stakes[i].amount;
+        }
 
-    function _approve(address _from, uint256 _amount) internal onlyOwner {
+        return total;
+    }
+
+    /** approve staking contract at token contract */
+    function _approve(address _from, uint256 _amount) internal {
         token.approve(_from, _amount);
     }
     
-    function contAddr() external view returns(address) {
-        return address(this);
-    }
-
     /** claim user token */
     function claim(uint _id) external override {
         uint256 balance = userBalance(address(this));
+
         (uint256 rewardedAmount, uint256 amount) = calculateTransferAmount(msg.sender, _id);
+
         require(balance > rewardedAmount, "insufficent funds.");
 
         token.transfer(msg.sender, rewardedAmount);
 
-        //decrease total supplied amount
-        totalSupplied -= amount;
+        totalStaked -= amount;
         _unstake(msg.sender, _id);
     }
 
-    /** unstake internal */
+    /** unstake remove user stake by given _id */
     function _unstake(address _staker, uint _id) internal {
         (, uint index) = getStakeById(_staker, _id);
         require (index < CODE_NOT_FOUND,  "can not find valid stake.");
@@ -98,7 +110,7 @@ contract Staking is Initializable, IStakeable {
         emit Unstake(msg.sender);
     }
 
-    /** caluclate staker reward internally */
+    /** caluclate staker claimable amount */
     function calculateTransferAmount(address _staker, uint _id) public view returns(uint256, uint256) {
         (Staker memory staker, uint index) = getStakeById(_staker, _id);
 
@@ -135,6 +147,7 @@ contract Staking is Initializable, IStakeable {
         return (st, CODE_NOT_FOUND);
     }
 
+    /** remove user stake with given array index */
     function _remove(uint _index) public {
         address me = msg.sender;
         require(_index < stakers[me].length, "index out of bound");
@@ -145,30 +158,23 @@ contract Staking is Initializable, IStakeable {
         stakers[me].pop();
     }
 
-    /**
-    * caclulate any staking model reward which implement IStakable interface
-    */
+    /** calculate staker reward */
     function _calcReward(Staker memory request) internal pure returns(uint) {
         return request.amount+ (request.amount * REWARD_PERCENTAGE / 100);
     }
 
-    /**
-    * caclulate any staking model penalty which implement IStakable interface
-    */
+    /** calculate staker penalty */
     function _calcPenalty(Staker memory request, uint secondStaked) internal pure returns(uint) {
 
-        uint hourStaked = secondStaked / 60 * 60;
-        uint REWARD_DEADLINE_HOURS = REWARD_DEADLINE_SECONDS / 60 * 60;
+        uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_SECONDS * secondStaked);
 
-        uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_HOURS * hourStaked);
         return request.amount - (request.amount * percent / 100);
     }
 
-    /**
-    * withdraw contract balance to owner account
-     */
-    function withdraw() external onlyOwner {
-        _approve(address(this), userBalance(address(this)));
-        token.transferFrom(address(this), bank, userBalance(address(this)));
+    /** withdraw contract balance to staking_main_pool_wallet */
+    function withdraw(uint amount) external onlyOwner {
+        _approve(address(this), amount);
+        token.transferFrom(address(this), staking_main_pool_wallet, amount);
+        //todo emit withdraw
     }
 }

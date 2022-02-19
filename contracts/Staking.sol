@@ -15,13 +15,13 @@ contract Staking is Initializable, IStakeable {
         _;
     }
 
-    uint256 public totalStaked;
-    uint constant CODE_NOT_FOUND = 9999999;
+    uint256 public totalStaked; // keeps total staking amount
+    uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds //3 hours now
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
 
     uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
@@ -30,13 +30,14 @@ contract Staking is Initializable, IStakeable {
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
     address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
 
+    // keeps staker info
     struct Staker {
         uint256 amount;
         uint256 reward;
         uint stakedAt;
     }
 
-    mapping(address => Staker []) public stakers;
+    mapping(address => Staker []) public stakers; // keeps all stakers
 
     function initialize() public initializer {
         _owner = msg.sender;

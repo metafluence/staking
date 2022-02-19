@@ -21,7 +21,7 @@ contract StakingM6 is Initializable, IStakeable {
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds //3 hours now
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds
 
     uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction

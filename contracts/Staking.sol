@@ -15,6 +15,9 @@ contract Staking is Initializable, IStakeable {
         _;
     }
 
+    enum StakeStatus {ACTIVE, PAUSED, COMPLETED}
+
+    StakeStatus private _stakeStatus;
     uint256 public totalStaked; // keeps total staking amount
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
@@ -43,13 +46,21 @@ contract Staking is Initializable, IStakeable {
         _owner = msg.sender;
         token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
         staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
+        _setStakeStatus(StakeStatus.ACTIVE);
     }
 
     /** add new staker */
     function stake(uint256 _amount) external override {
         require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
         require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
+        require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
         require(userTotalStakedAmount(msg.sender) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
+        
+        //set stake model status as completed if reached POOL_MAX_SIZE
+        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked > MIN_STAKING_AMOUNT) {
+            _setStakeStatus(StakeStatus.COMPLETED);
+        }
+
         Staker memory st = Staker(_amount, 0, block.timestamp);
         
         token.transferFrom(msg.sender, address(this), _amount);
@@ -177,5 +188,12 @@ contract Staking is Initializable, IStakeable {
         _approve(address(this), amount);
         token.transferFrom(address(this), staking_main_pool_wallet, amount);
         //todo emit withdraw
+    }
+
+    /**
+    * set current staking model as finished
+     */
+    function _setStakeStatus(StakeStatus status) public onlyOwner {
+        _stakeStatus = status;
     }
 }

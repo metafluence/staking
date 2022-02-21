@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 
 
-contract StakingM6 is Initializable, IStakeable {
+contract Staking is Initializable, IStakeable {
     IERC20Upgradeable public token;
     address private _owner;
 
@@ -15,8 +15,11 @@ contract StakingM6 is Initializable, IStakeable {
         _;
     }
 
-    uint256 public totalStaked;
-    uint constant CODE_NOT_FOUND = 9999999;
+    enum StakeStatus {ACTIVE, PAUSED, COMPLETED}
+
+    StakeStatus private _stakeStatus;
+    uint256 public totalStaked; // keeps total staking amount
+    uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
     uint constant REWARD_PERCENTAGE  = 20; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
@@ -30,25 +33,34 @@ contract StakingM6 is Initializable, IStakeable {
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
     address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
 
+    // keeps staker info
     struct Staker {
         uint256 amount;
         uint256 reward;
         uint stakedAt;
     }
 
-    mapping(address => Staker []) public stakers;
+    mapping(address => Staker []) public stakers; // keeps all stakers
 
     function initialize() public initializer {
         _owner = msg.sender;
         token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
         staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
+        _setStakeStatus(StakeStatus.ACTIVE);
     }
 
     /** add new staker */
     function stake(uint256 _amount) external override {
         require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
         require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
+        require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
         require(userTotalStakedAmount(msg.sender) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
+        
+        //set stake model status as completed if reached POOL_MAX_SIZE
+        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked > MIN_STAKING_AMOUNT) {
+            _setStakeStatus(StakeStatus.COMPLETED);
+        }
+
         Staker memory st = Staker(_amount, 0, block.timestamp);
         
         token.transferFrom(msg.sender, address(this), _amount);
@@ -176,5 +188,12 @@ contract StakingM6 is Initializable, IStakeable {
         _approve(address(this), amount);
         token.transferFrom(address(this), staking_main_pool_wallet, amount);
         //todo emit withdraw
+    }
+
+    /**
+    * set current staking model as finished
+     */
+    function _setStakeStatus(StakeStatus status) public onlyOwner {
+        _stakeStatus = status;
     }
 }

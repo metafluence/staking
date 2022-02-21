@@ -439,6 +439,16 @@
       "address": "0x9ffCa974cbA3762d7a66E98e9bf31C1Cae6c0c1c",
       "txHash": "0x92d31b5a46c18e49ac2b3fd56503eb3210dd35e550ac7a62134ad875d92ffd85",
       "kind": "transparent"
+    },
+    {
+      "address": "0xDE81136140F73a335E37bd8D28C80c794a4655b9",
+      "txHash": "0xa4e5233145c95231943da9fae3361d3ec2a0cff9b7870064777e092764d1847a",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x34a8d55B0be8CBB3f34Aa599eE3Dfd65fDCe8D80",
+      "txHash": "0x66898311090baf9901f16a863b7f292ce5fd304d5814f2feca0cda2cd7749d17",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -6652,6 +6662,214 @@
           },
           "t_struct(Staker)222_storage": {
             "label": "struct StakingM6.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "400c47728521fe47bf9dbb5e3cf65fa89405826b05c097babdede7f079b6c455": {
+      "address": "0x0b430dA94A040f4C44d42334cE858b1e3d962863",
+      "txHash": "0xc927020d5d69329aa5646f4728de8441f46123fd80267e0314125aede4f97ebb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/Staking.sol:10"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:11"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)177",
+            "src": "contracts/Staking.sol:20"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:21"
+          },
+          {
+            "contract": "Staking",
+            "label": "staking_main_pool_wallet",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:34"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)229_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:43"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_enum(StakeStatus)177": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)229_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)229_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)229_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "148038a7028051dfcc747a9263b6784a34aba9b3954e69103da34fad3f8e4aad": {
+      "address": "0xce18DDE80C2E0fB94dBEBb14D4FB8900709cafBc",
+      "txHash": "0xaa3a2f9f353938b2d5f8044ff4efaf4942d11fd95038e99874a8839b160329bb",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)123",
+            "src": "contracts/Staking.sol:10"
+          },
+          {
+            "contract": "Staking",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "contracts/Staking.sol:11"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)177",
+            "src": "contracts/Staking.sol:20"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:21"
+          },
+          {
+            "contract": "Staking",
+            "label": "staking_main_pool_wallet",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:34"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)229_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:43"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)123": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_enum(StakeStatus)177": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)229_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_array(t_struct(Staker)229_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)229_storage": {
+            "label": "struct Staking.Staker",
             "members": [
               {
                 "label": "amount",

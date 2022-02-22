@@ -5,12 +5,12 @@ import "./IStakeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeable.sol";
 
 
-contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
+contract StakingM6 is Initializable, IStakeable, OwnableUpgradeable {
+        
     IERC20Upgradeable public token;
-    address private _owner;
-
 
     enum StakeStatus {ACTIVE, PAUSED, COMPLETED}
 
@@ -23,7 +23,7 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
 
     uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds
 
-    uint constant POOL_MAX_SIZE = 500_000 * 10 ** 18; //keep maximum pool size
+    uint constant POOL_MAX_SIZE = 250_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
     uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
 
@@ -38,9 +38,9 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
     }
 
     mapping(address => Staker []) public stakers; // keeps all stakers
-
+    
     function initialize() public initializer {
-        _owner = msg.sender;
+        __Ownable_init();
         token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
         staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
     }
@@ -52,24 +52,33 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
         require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
         require(userTotalStakedAmount(msg.sender) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
         
-        //set stake model status as completed if reached POOL_MAX_SIZE
-        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked > MIN_STAKING_AMOUNT) {
+        //check stake model hash enough sapce for new staking then set stake model as completed
+        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
             setStakeStatus(StakeStatus.COMPLETED);
         }
 
         Staker memory st = Staker(_amount, 0, block.timestamp);
-        
-        token.transferFrom(msg.sender, address(this), _amount);
+    
+        SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
         st.reward = _calcReward(st);
         stakers[msg.sender].push(st);
         totalStaked += _amount;
         emit Stake(msg.sender, _amount);
     }
+
+    /** retrieve user stakes */
+    function myStakes(address stakerAddr)
+        external
+        view
+        returns (Staker [] memory)
+    {        
+        return stakers[stakerAddr];
+    }
     
     /** find user total staked amount */
     function userTotalStakedAmount(address stakerAddr) public view returns(uint256) {
         uint256 total;
-        Staker [] memory stakes = stakers[stakerAddr];
+        Staker [] storage stakes = stakers[stakerAddr];
         for (uint i = 0; i < stakes.length; i++) {
             total += stakes[i].amount;
         }
@@ -85,7 +94,7 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
 
         require(balance > rewardedAmount, "insufficent funds.");
 
-        token.transfer(msg.sender, rewardedAmount);
+        SafeERC20Upgradeable.safeTransfer(token, msg.sender, rewardedAmount);
 
         totalStaked -= amount;
         _unstake(msg.sender, _id);
@@ -137,7 +146,7 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
     }
 
     /** remove user stake with given array index */
-    function _remove(uint _index) public {
+    function _remove(uint _index) internal {
         address me = msg.sender;
         require(_index < stakers[me].length, "index out of bound");
 
@@ -163,7 +172,7 @@ contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
     /** withdraw contract balance to staking_main_pool_wallet */
     function withdraw(uint amount) external onlyOwner {
         token.approve(address(this), amount);
-        token.transferFrom(address(this), staking_main_pool_wallet, amount);
+        SafeERC20Upgradeable.safeTransferFrom(token, address(this), staking_main_pool_wallet, amount);
         //todo emit withdraw
     }
 

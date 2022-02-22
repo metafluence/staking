@@ -9,5 +9,5 @@ interface IStakeable {
     function claim(uint _id) external;
     
     event Stake(address indexed staker, uint256 _amount);
-    event Unstake(address indexed staker);
+    event Claim(address indexed staker);
 }

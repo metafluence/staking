@@ -4,16 +4,13 @@ pragma solidity ^0.8.0;
 import "./IStakeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts-upgradeable/token/ERC20/IERC20Upgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 
-contract StakingM6 is Initializable, IStakeable {
+contract StakingM6 is Initializable, OwnableUpgradeable, IStakeable {
     IERC20Upgradeable public token;
     address private _owner;
 
-    modifier onlyOwner {
-        require(msg.sender == _owner, "only owner has permission for this action.");
-        _;
-    }
 
     enum StakeStatus {ACTIVE, PAUSED, COMPLETED}
 
@@ -21,12 +18,12 @@ contract StakingM6 is Initializable, IStakeable {
     uint256 public totalStaked; // keeps total staking amount
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
-    uint constant REWARD_PERCENTAGE  = 20; //reward percent
+    uint constant REWARD_PERCENTAGE  = 10; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
     uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds
 
-    uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
+    uint constant POOL_MAX_SIZE = 500_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
     uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
 
@@ -46,7 +43,6 @@ contract StakingM6 is Initializable, IStakeable {
         _owner = msg.sender;
         token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
         staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
-        setStakeStatus(StakeStatus.ACTIVE);
     }
 
     /** add new staker */
@@ -69,20 +65,6 @@ contract StakingM6 is Initializable, IStakeable {
         totalStaked += _amount;
         emit Stake(msg.sender, _amount);
     }
-
-    /** retrieve user stakes */
-    function myStakes(address stakerAddr)
-        external
-        view
-        returns (Staker [] memory)
-    {        
-        return stakers[stakerAddr];
-    }
-
-    /** retrieve user balance from token contract */
-    function userBalance(address addr) public view returns(uint256) {
-        return token.balanceOf(addr);
-    }
     
     /** find user total staked amount */
     function userTotalStakedAmount(address stakerAddr) public view returns(uint256) {
@@ -95,14 +77,9 @@ contract StakingM6 is Initializable, IStakeable {
         return total;
     }
 
-    /** approve staking contract at token contract */
-    function _approve(address _from, uint256 _amount) internal {
-        token.approve(_from, _amount);
-    }
-    
     /** claim user token */
     function claim(uint _id) external override {
-        uint256 balance = userBalance(address(this));
+        uint256 balance = token.balanceOf(address(this));
 
         (uint256 rewardedAmount, uint256 amount) = calculateTransferAmount(msg.sender, _id);
 
@@ -119,7 +96,7 @@ contract StakingM6 is Initializable, IStakeable {
         (, uint index) = getStakeById(_staker, _id);
         require (index < CODE_NOT_FOUND,  "can not find valid stake.");
         _remove(index);
-        emit Unstake(msg.sender);
+        emit Claim(msg.sender);
     }
 
     /** caluclate staker claimable amount */
@@ -148,7 +125,7 @@ contract StakingM6 is Initializable, IStakeable {
     */
     function getStakeById(address _staker, uint _id) internal view returns(Staker memory, uint) {
 
-        Staker [] memory stakes = stakers[_staker];
+        Staker [] storage stakes = stakers[_staker];
 
         for (uint i = 0; i < stakes.length; i++) {
             if (stakes[i].stakedAt == _id) {
@@ -185,7 +162,7 @@ contract StakingM6 is Initializable, IStakeable {
 
     /** withdraw contract balance to staking_main_pool_wallet */
     function withdraw(uint amount) external onlyOwner {
-        _approve(address(this), amount);
+        token.approve(address(this), amount);
         token.transferFrom(address(this), staking_main_pool_wallet, amount);
         //todo emit withdraw
     }

@@ -9,7 +9,16 @@ import "@openzeppelin/contracts-upgradeable/token/ERC20/utils/SafeERC20Upgradeab
 
 
 contract Staking is Initializable, IStakeable, OwnableUpgradeable {
-        
+
+    /** modifier check stake is available */
+    modifier StakeAvailable(address _staker, uint256 _amount) {
+        require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
+        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
+        require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
+        require(userTotalStakedAmount(_staker) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
+        _;
+    }
+
     IERC20Upgradeable public token;
 
     enum StakeStatus {ACTIVE, PAUSED, COMPLETED}
@@ -18,15 +27,48 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     uint256 public totalStaked; // keeps total staking amount
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
-    uint constant REWARD_PERCENTAGE  = 3; //reward percent
-    uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
+    // FOR 3 monthes staking
+    // uint constant REWARD_PERCENTAGE  = 3; //reward percent
+    // uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
 
-    uint constant POOL_MAX_SIZE = 250_000 * 10 ** 18; //keep maximum pool size
+    // uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
+    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    // uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    
+    // FOR 6 monthes staking
+    // uint constant REWARD_PERCENTAGE  = 10; //reward percent
+    // uint constant PENALTY_PERCENTAGE  = 35; //penalty percent
+
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds
+
+    // uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
+    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    // uint constant MAX_STAKING_AMOUNT = 500000 * 10 ** 18; //keep max staking amount per wallet
+
+    // FOR 9 monthes staking
+    // uint constant REWARD_PERCENTAGE  = 20; //reward percent
+    // uint constant PENALTY_PERCENTAGE  = 40; //penalty percent
+
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 9; //stake time with seconds
+
+    // uint constant POOL_MAX_SIZE = 15_000_000 * 10 ** 18; //keep maximum pool size
+    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    // uint constant MAX_STAKING_AMOUNT = 750000 * 10 ** 18; //keep max staking amount per wallet
+
+    // FOR 12 monthes staking
+    uint constant REWARD_PERCENTAGE  = 36; //reward percent
+    uint constant PENALTY_PERCENTAGE  = 45; //penalty percent
+
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 12; //stake time with seconds
+    
+    uint constant POOL_MAX_SIZE = 20_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
     uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
 
+    uint constant PENALTY_DIVISION_DAYS = 30;
+    // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
     address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
 
@@ -46,15 +88,10 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     }
 
     /** add new staker */
-    function stake(uint256 _amount) external override {
-        require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
-        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
-        require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
-        require(userTotalStakedAmount(msg.sender) + _amount <  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
-        
+    function stake(uint256 _amount) external override StakeAvailable(msg.sender, _amount){        
         //check stake model hash enough sapce for new staking then set stake model as completed
         if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
-            setStakeStatus(StakeStatus.COMPLETED);
+            _setStakeStatus(StakeStatus.COMPLETED);
         }
 
         Staker memory st = Staker(_amount, 0, block.timestamp);
@@ -88,6 +125,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** claim user token */
     function claim(uint _id) external override {
+        require(_stakeStatus != StakeStatus.PAUSED, "Staking model PAUSED.");
         uint256 balance = token.balanceOf(address(this));
 
         (uint256 rewardedAmount, uint256 amount) = calculateTransferAmount(msg.sender, _id);
@@ -182,4 +220,25 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     function setStakeStatus(StakeStatus status) public onlyOwner {
         _stakeStatus = status;
     }
+    /** set stake status internally */
+    function _setStakeStatus(StakeStatus status) internal {
+        _stakeStatus = status;
+    }
+    /** add new stake by contract owner manually */
+    function addStake(address _staker, uint256 _amount) public onlyOwner (_staker, _amount) {
+        Staker memory st = Staker(_amount, 0, block.timestamp);
+        st.reward = _calcReward(st);
+        stakers[msg.sender].push(st);
+        totalStaked += _amount;
+        emit Stake(msg.sender, _amount);
+    }
+
+    /** remove stake by contract owner manually*/
+    function removeStake(address _staker, uint _id) public onlyOwner {
+        (, uint index) = getStakeById(_staker, _id);
+        require (index < CODE_NOT_FOUND,  "can not find valid stake.");
+        _remove(index);
+        emit Claim(msg.sender);
+    }
+
 }

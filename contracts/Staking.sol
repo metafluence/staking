@@ -28,14 +28,15 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
     // FOR 3 monthes staking
-    // uint constant REWARD_PERCENTAGE  = 3; //reward percent
-    // uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
+    uint constant REWARD_PERCENTAGE  = 3; //reward percent
+    uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
 
-    // uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
-    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    // uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
+    uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant PENALTY_DIVISION_STEP = 90;
     
     // FOR 6 monthes staking
     // uint constant REWARD_PERCENTAGE  = 10; //reward percent
@@ -58,16 +59,15 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     // uint constant MAX_STAKING_AMOUNT = 750000 * 10 ** 18; //keep max staking amount per wallet
 
     // FOR 12 monthes staking
-    uint constant REWARD_PERCENTAGE  = 36; //reward percent
-    uint constant PENALTY_PERCENTAGE  = 45; //penalty percent
+    // uint constant REWARD_PERCENTAGE  = 36; //reward percent
+    // uint constant PENALTY_PERCENTAGE  = 45; //penalty percent
 
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 12; //stake time with seconds
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 12; //stake time with seconds
     
-    uint constant POOL_MAX_SIZE = 20_000_000 * 10 ** 18; //keep maximum pool size
-    uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
+    // uint constant POOL_MAX_SIZE = 20_000_000 * 10 ** 18; //keep maximum pool size
+    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    // uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
 
-    uint constant PENALTY_DIVISION_DAYS = 30;
     // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
     address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
@@ -95,11 +95,11 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         }
 
         Staker memory st = Staker(_amount, 0, block.timestamp);
-
-        SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
         st.reward = _calcReward(st);
         stakers[msg.sender].push(st);
         totalStaked += _amount;
+
+        SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
         emit Stake(msg.sender, _amount);
     }
 
@@ -131,18 +131,16 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         (uint256 rewardedAmount, uint256 amount) = calculateTransferAmount(msg.sender, _id);
 
         require(balance > rewardedAmount, "insufficent funds.");
-
-        SafeERC20Upgradeable.safeTransfer(token, msg.sender, rewardedAmount);
-
         totalStaked -= amount;
         _unstake(msg.sender, _id);
+        SafeERC20Upgradeable.safeTransfer(token, msg.sender, rewardedAmount);
     }
 
     /** unstake remove user stake by given _id */
     function _unstake(address _staker, uint _id) internal {
         (, uint index) = getStakeById(_staker, _id);
         require (index < CODE_NOT_FOUND,  "can not find valid stake.");
-        _remove(index);
+        _remove(msg.sender, index);
         emit Claim(msg.sender);
     }
 
@@ -184,14 +182,13 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     }
 
     /** remove user stake with given array index */
-    function _remove(uint _index) internal {
-        address me = msg.sender;
-        require(_index < stakers[me].length, "index out of bound");
+    function _remove(address _staker, uint _index) internal {
+        require(_index < stakers[_staker].length, "index out of bound");
 
-        for (uint i = _index; i < stakers[me].length - 1; i++) {
-            stakers[me][i] = stakers[me][i + 1];
+        for (uint i = _index; i < stakers[_staker].length - 1; i++) {
+            stakers[_staker][i] = stakers[_staker][i + 1];
         }
-        stakers[me].pop();
+        stakers[_staker].pop();
     }
 
     /** calculate staker reward */
@@ -201,10 +198,12 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** calculate staker penalty */
     function _calcPenalty(Staker memory request, uint secondStaked) internal pure returns(uint) {
-
-        uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_SECONDS * secondStaked);
-
-        return request.amount - (request.amount * percent / 100);
+        uint chunkSize = REWARD_DEADLINE_SECONDS / PENALTY_DIVISION_STEP;
+        uint chunkPercent = PENALTY_PERCENTAGE * 10 ** 10 / PENALTY_DIVISION_STEP;
+        
+        // uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_SECONDS * secondStaked);
+        uint percent = PENALTY_PERCENTAGE * 10 ** 10 - (secondStaked / chunkSize * chunkPercent);
+        return request.amount - ((request.amount * percent / 100) / 10 ** 10); 
     }
 
     /** withdraw contract balance to staking_main_pool_wallet */
@@ -225,20 +224,33 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         _stakeStatus = status;
     }
     /** add new stake by contract owner manually */
-    function addStake(address _staker, uint256 _amount) public onlyOwner (_staker, _amount) {
+    function addStake(address _staker, uint256 _amount) public onlyOwner {
         Staker memory st = Staker(_amount, 0, block.timestamp);
         st.reward = _calcReward(st);
-        stakers[msg.sender].push(st);
+        stakers[_staker].push(st);
         totalStaked += _amount;
-        emit Stake(msg.sender, _amount);
+        emit Stake(_staker, _amount);
     }
 
     /** remove stake by contract owner manually*/
     function removeStake(address _staker, uint _id) public onlyOwner {
         (, uint index) = getStakeById(_staker, _id);
         require (index < CODE_NOT_FOUND,  "can not find valid stake.");
-        _remove(index);
+        _remove(_staker, index);
         emit Claim(msg.sender);
     }
 
+    function checkPenaltyCalculation(uint256 secondStaked, uint256 _amount) public pure returns(uint256, uint256, uint256, uint256) {
+        uint256 chunkSize = REWARD_DEADLINE_SECONDS / PENALTY_DIVISION_STEP;
+        uint256 chunkPercent = PENALTY_PERCENTAGE * (10 ** 10) / PENALTY_DIVISION_STEP;
+        
+        uint256 percent = PENALTY_PERCENTAGE * (10 ** 10) - ((secondStaked / chunkSize) * chunkPercent);
+        
+        require(percent >= 0,  "percet must be great zero.");
+
+        uint256 result = _amount - ((_amount * percent / 100) / 10 ** 10);
+        require(result >=0, "result must be great zero.");
+        
+        return (chunkSize, chunkPercent, percent, result);
+    }
 }

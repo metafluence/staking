@@ -624,6 +624,26 @@
       "address": "0x8E5652c1E4A921681a8261AF5b378f7a3A36b263",
       "txHash": "0x2887b7db2b208590cfeabfa9f370f3bf59bb033d911b6db08d8ceaf1be7ab665",
       "kind": "transparent"
+    },
+    {
+      "address": "0x6e51c6E07b10FaE19F3394515Ec0eB6D3aCcd9Dd",
+      "txHash": "0x140657d55313d2e79bf7fb55deb85a3f0666feedef291efe091e86a27bfef95e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xF8035c41bd23e3c598Fb832CfF9E4Caa9a7B0338",
+      "txHash": "0xc033fd63e6b6681398333a48b92d3a25196e213d9bdfd9eab5fc0212c28ee23e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x7417627863D4E6053D960611B0C7dE3854e85a8e",
+      "txHash": "0xbdd0bd5094348869b7c591967f3815c73ad249a6c2738cb0f69f434b4153b12c",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xED2cA9f15AE6Ba73810A8889efb0D156ecF5E5F7",
+      "txHash": "0x395cfb62f2e24c63125d3732819b45ad361c102eacbf3862ee91c63613d1f38b",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -10668,6 +10688,372 @@
             "label": "stakers",
             "type": "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)",
             "src": "contracts/Staking.sol:82"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)248": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_enum(StakeStatus)849": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Staker)904_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)904_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "ec5c690034cfb0f695567d2cf9677890d5dd2877a44b785636dbc86502374ea9": {
+      "address": "0xC8E94220ce1E70C5d7E48299a40685Fa0570973B",
+      "txHash": "0x83b07767840076befd19e15fba53703089f4da49bc578cd88ef6cea9fa1c22b8",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)248",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)849",
+            "src": "contracts/Staking.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:27"
+          },
+          {
+            "contract": "Staking",
+            "label": "staking_main_pool_wallet",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:74"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:83"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)248": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_enum(StakeStatus)849": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Staker)904_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)904_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "1ac230f092bbdeab33aaf9c366d526d3a6f1aeebed01fd5fb9b48ef035fd8e1e": {
+      "address": "0x792Ce38dd83e96ffDfC88ACDcbe199bdd9515734",
+      "txHash": "0x76033e0c79ed655c4f78230d7dcb11952be13b19805e618a7e4d366e22ffb4d8",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)248",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)849",
+            "src": "contracts/Staking.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:27"
+          },
+          {
+            "contract": "Staking",
+            "label": "staking_main_pool_wallet",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:75"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:84"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)248": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_enum(StakeStatus)849": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_address_payable": {
+            "label": "address payable"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Staker)904_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)904_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "cfc1be5516574e48b74fc2f9de919acf6770e1eb3bab97195e25d1e09ddb5b61": {
+      "address": "0x12DFFd0A90674C8b3Ef0572cDcaf6666D7822237",
+      "txHash": "0xd83f9970f28ef9e961ff6a89c04592f61b24a9241abea4a0c602e4c477be36d2",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)248",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)849",
+            "src": "contracts/Staking.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:27"
+          },
+          {
+            "contract": "Staking",
+            "label": "staking_main_pool_wallet",
+            "type": "t_address_payable",
+            "src": "contracts/Staking.sol:76"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)904_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:85"
           }
         ],
         "types": {

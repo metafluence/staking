@@ -90,17 +90,18 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** add new staker */
     function stake(uint256 _amount) external override StakeAvailable(msg.sender, _amount){        
-        //check stake model hash enough sapce for new staking then set stake model as completed
-        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
-            _setStakeStatus(StakeStatus.COMPLETED);
-        }
-
         Staker memory st = Staker(_amount, 0, block.timestamp);
         st.reward = _calcReward(st);
         stakers[msg.sender].push(st);
         totalStaked += _amount;
 
         SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
+
+        //check stake model hash enough sapce for new staking then set stake model as completed
+        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
+            _setStakeStatus(StakeStatus.COMPLETED);
+        }
+
         emit Stake(msg.sender, _amount);
     }
 

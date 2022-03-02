@@ -73,7 +73,6 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
-    address payable staking_main_pool_wallet; // withdraw collected staking token to this wallet if needed
 
     // keeps staker info
     struct Staker {
@@ -87,7 +86,6 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     function initialize() public initializer {
         __Ownable_init();
         token = IERC20Upgradeable(TOKEN_CONTRACT_ADDRESS);
-        staking_main_pool_wallet = payable(0xC26392737eF87FD3e4eEFBD877feD88e89A0551F);
     }
 
     /** add new staker */
@@ -219,8 +217,10 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     }
 
     /** withdraw contract balance to staking_main_pool_wallet */
-    function withdraw(uint amount) external onlyOwner {
-        SafeERC20Upgradeable.safeTransferFrom(token, address(this), staking_main_pool_wallet, amount);
+    function withdraw(address payable addr, uint amount) external onlyOwner {
+        //without this call SafeERC20Upgradeable.safeTransferFrom return 1transfer amount exceeds allowance` error
+        token.approve(address(this), amount);
+        SafeERC20Upgradeable.safeTransferFrom(token, address(this), addr, amount);
     }
 
     /**

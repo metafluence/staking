@@ -28,15 +28,15 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
     // FOR 3 monthes staking
-    // uint constant REWARD_PERCENTAGE  = 3; //reward percent
-    // uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
+    uint constant REWARD_PERCENTAGE  = 3; //reward percent
+    uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
 
-    // uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
-    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    // uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
-    // uint constant PENALTY_DIVISION_STEP = 90;
+    uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
+    uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
+    uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant PENALTY_DIVISION_STEP = 90;
     
     // FOR 6 monthes staking
     // uint constant REWARD_PERCENTAGE  = 10; //reward percent
@@ -106,7 +106,10 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         emit Stake(msg.sender, _amount);
     }
 
-        /** retrieve user stakes */
+    /** retrieve user stakes 
+    * it does not duplicate stakers. beacause stakers receive address,  uint256 and return single Staker model
+    * myStakes returns array of Staker
+    */
     function myStakes(address stakerAddr)
         external
         view
@@ -115,7 +118,9 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         return stakers[stakerAddr];
     }
     
-    /** find user total staked amount */
+    /** find user total staked amount 
+    * we do not prefer use external library. Also Solidity has not built in sum function.
+    */
     function userTotalStakedAmount(address stakerAddr) public view returns(uint256) {
         uint256 total;
         Staker [] storage stakes = stakers[stakerAddr];
@@ -180,11 +185,15 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
                 return (stakes[i], i);
             }
         }
-        Staker memory st;
+
+        //initalize empty Staker
+        Staker memory st = Staker(0x0, 0, 0);
         return (st, CODE_NOT_FOUND);
     }
 
-    /** remove user stake with given array index */
+    /** remove user stake with given array index 
+    * we do not prefer use external library. Also Solidity has not built in remove function.
+    */
     function _remove(address _staker, uint _index) internal {
         require(_index < stakers[_staker].length, "index out of bound");
 

@@ -218,7 +218,6 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** withdraw contract balance to staking_main_pool_wallet */
     function withdraw(address payable addr, uint amount) external onlyOwner {
-        //without this call SafeERC20Upgradeable.safeTransferFrom return 1transfer amount exceeds allowance` error
         token.approve(address(this), amount);
         SafeERC20Upgradeable.safeTransferFrom(token, address(this), addr, amount);
     }
@@ -244,9 +243,10 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** remove stake by contract owner manually*/
     function removeStake(address _staker, uint _id) public onlyOwner {
-        (, uint index) = getStakeById(_staker, _id);
+        (Staker memory st, uint index) = getStakeById(_staker, _id);
         require (index < CODE_NOT_FOUND,  "can not find valid stake.");
         _remove(_staker, index);
+        totalStaked -= st.amount;
         emit Claim(msg.sender);
     }
 

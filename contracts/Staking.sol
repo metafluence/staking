@@ -219,8 +219,9 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** withdraw contract balance to staking_main_pool_wallet */
     function withdraw(address payable addr, uint amount) external onlyOwner {
-        token.approve(address(this), amount);
-        SafeERC20Upgradeable.safeTransferFrom(token, address(this), addr, amount);
+        // token.approve(address(this), amount);
+        // SafeERC20Upgradeable.safeTransferFrom(token, address(this), addr, amount);
+        SafeERC20Upgradeable.safeTransfer(token, addr, amount);
     }
 
     /**

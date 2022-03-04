@@ -12,10 +12,10 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** modifier check stake is available */
     modifier StakeAvailable(address _staker, uint256 _amount) {
-        require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be greate or equal MIN_STAKING_AMOUNT stake value(2000)");
-        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reach POOL_MAX_SIZE.");
-        require(_stakeStatus == StakeStatus.ACTIVE, "Stake status is not ACTIVE.");
-        require(userTotalStakedAmount(_staker) + _amount <=  MAX_STAKING_AMOUNT,  "reach MAX_STAKING_AMOUNT per wallet.");
+        require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be great or equal to minimum staking amount");
+        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reached pool max size");
+        require(_stakeStatus == StakeStatus.ACTIVE, "Staking is not active");
+        require(userTotalStakedAmount(_staker) + _amount <=  MAX_STAKING_AMOUNT,  "reached max staking amount per wallet");
         _;
     }
 
@@ -72,7 +72,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     // uint constant PENALTY_DIVISION_STEP = 360;
 
     // wallet infos
-    address constant TOKEN_CONTRACT_ADDRESS = 0xc39A5f634CC86a84147f29a68253FE3a34CDEc57; //Token contract address
+    address constant TOKEN_CONTRACT_ADDRESS = 0xa78775bba7a542F291e5ef7f13C6204E704A90Ba; //Token contract address
 
     // keeps staker info
     struct Staker {
@@ -204,23 +204,20 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
 
     /** calculate staker reward */
     function _calcReward(Staker memory request) internal pure returns(uint) {
-        return request.amount+ (request.amount * REWARD_PERCENTAGE / 100);
+        return request.amount + (request.amount * REWARD_PERCENTAGE / 100);
     }
 
     /** calculate staker penalty */
     function _calcPenalty(Staker memory request, uint secondStaked) internal pure returns(uint) {
         uint chunkSize = REWARD_DEADLINE_SECONDS / PENALTY_DIVISION_STEP;
         uint chunkPercent = PENALTY_PERCENTAGE * 10 ** 10 / PENALTY_DIVISION_STEP;
-        
-        // uint percent = PENALTY_PERCENTAGE - (PENALTY_PERCENTAGE / REWARD_DEADLINE_SECONDS * secondStaked);
         uint percent = PENALTY_PERCENTAGE * 10 ** 10 - (secondStaked / chunkSize * chunkPercent);
+
         return request.amount - ((request.amount * percent / 100) / 10 ** 10);
     }
 
     /** withdraw contract balance to staking_main_pool_wallet */
     function withdraw(address payable addr, uint amount) external onlyOwner {
-        // token.approve(address(this), amount);
-        // SafeERC20Upgradeable.safeTransferFrom(token, address(this), addr, amount);
         SafeERC20Upgradeable.safeTransfer(token, addr, amount);
     }
 
@@ -235,8 +232,8 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         _stakeStatus = status;
     }
     /** add new stake by contract owner manually */
-    function addStake(address _staker, uint256 _amount) public onlyOwner {
-        Staker memory st = Staker(_amount, 0, block.timestamp);
+    function addStake(address _staker, uint256 _amount, uint256 _time) public onlyOwner {
+        Staker memory st = Staker(_amount, 0, _time);
         st.reward = _calcReward(st);
         stakers[_staker].push(st);
         totalStaked += _amount;
@@ -251,18 +248,5 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         totalStaked -= st.amount;
         emit Claim(msg.sender);
     }
-
-    function checkPenaltyCalculation(uint256 secondStaked, uint256 _amount) public pure returns(uint256, uint256, uint256, uint256) {
-        uint256 chunkSize = REWARD_DEADLINE_SECONDS / PENALTY_DIVISION_STEP;
-        uint256 chunkPercent = PENALTY_PERCENTAGE * (10 ** 10) / PENALTY_DIVISION_STEP;
-        
-        uint256 percent = PENALTY_PERCENTAGE * (10 ** 10) - ((secondStaked / chunkSize) * chunkPercent);
-        
-        require(percent >= 0,  "percet must be great zero.");
-
-        uint256 result = _amount - ((_amount * percent / 100) / 10 ** 10);
-        require(result >=0, "result must be great zero.");
-        
-        return (chunkSize, chunkPercent, percent, result);
-    }
+    
 }

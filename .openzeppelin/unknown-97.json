@@ -799,6 +799,21 @@
       "address": "0x57f836c5747411688387a2D0CB0C34Ee3cffdEeE",
       "txHash": "0xff3abf642e6673c7e4b7f087672476b0cfa84e46fdd52d991835e8c9b61104a3",
       "kind": "transparent"
+    },
+    {
+      "address": "0x7be5Ac591573e1e92660EFB163273498a6291bE1",
+      "txHash": "0x89af3201675b28dcbbb3399fec98108c0c29d02a13901febdad8d8dd65939275",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x186074e6B9856a8854A251788284E0E4AD0cd214",
+      "txHash": "0x0f1a4c0a1222d00162e91a1f7f3ea30296924f375a78358099add754da247f08",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB9bBCff3Ab34F8115E4311CAa0724B0518eBD653",
+      "txHash": "0xed9f82e731d449866532ac4b5890277a2ce5abf3c8c3c476b98d0d7ead18df69",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -13914,6 +13929,119 @@
     "ab779f13de8ce003873f7c40ba82d16c70f4a5062d4a1e2bd86f7d09ba3187d9": {
       "address": "0xf1721675F495382Ec08973DC30080D31368125Fa",
       "txHash": "0x81b477c0e31dc2b01bf89e48e801502a5f1be40af567478f6f014b36de945666",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)248",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)849",
+            "src": "contracts/Staking.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:27"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)902_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:84"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)248": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_enum(StakeStatus)849": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)902_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Staker)902_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)902_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "2c0f2d165c93016539f1c31ea6da3133419ecddab4780e1d009c5aadf72a7251": {
+      "address": "0x69Ddf8627e414C71b5e91BD0995cA49384E23f5a",
+      "txHash": "0xeddef74e75e81d365f07f63314bb789ffa511e9167b35127f8da4d6013f68d50",
       "layout": {
         "storage": [
           {

@@ -31,7 +31,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     uint constant REWARD_PERCENTAGE  = 3; //reward percent
     uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 3; //stake time with seconds
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 3; //stake time with seconds. hour * dayHour * daysCount * month
 
     uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
@@ -42,7 +42,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     // uint constant REWARD_PERCENTAGE  = 10; //reward percent
     // uint constant PENALTY_PERCENTAGE  = 35; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 6; //stake time with seconds
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 6; //stake time with seconds
 
     // uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
     // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
@@ -53,7 +53,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     // uint constant REWARD_PERCENTAGE  = 20; //reward percent
     // uint constant PENALTY_PERCENTAGE  = 40; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 9; //stake time with seconds
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 9; //stake time with seconds
 
     // uint constant POOL_MAX_SIZE = 15_000_000 * 10 ** 18; //keep maximum pool size
     // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
@@ -64,7 +64,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     // uint constant REWARD_PERCENTAGE  = 36; //reward percent
     // uint constant PENALTY_PERCENTAGE  = 45; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 12; //stake time with seconds
+    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 12; //stake time with seconds
     
     // uint constant POOL_MAX_SIZE = 20_000_000 * 10 ** 18; //keep maximum pool size
     // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction

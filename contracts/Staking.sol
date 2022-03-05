@@ -98,7 +98,7 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
         SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
 
         //check stake model hash enough sapce for new staking then set stake model as completed
-        if (totalStaked == POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
+        if (totalStaked >= POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
             _setStakeStatus(StakeStatus.COMPLETED);
         }
 

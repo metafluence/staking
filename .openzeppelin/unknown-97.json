@@ -819,6 +819,11 @@
       "address": "0x93F93a10C417EF6c046fd109Db027EA5eF8D8110",
       "txHash": "0x1263629c6a0022500515ad4e647f2e3d70650d1b86fbf8df0bf34c38455ea173",
       "kind": "transparent"
+    },
+    {
+      "address": "0xb084594dC3eE8588174e57D3eD72A8eef98427A4",
+      "txHash": "0x17d0a055cc8e927d97ed65bff7db6a258196802fb43bb593ea94836cf78461d7",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -14160,6 +14165,119 @@
     "21fd37fad23bcc16090215e300a84661260c7dbabadeea82c4d94d1c25573910": {
       "address": "0xF6f83c4A82CC41b402C103fD46fECe8B8292Ff58",
       "txHash": "0x7f438201a2118c703417ba28897dd9455d979b02b19a903d6dfb86837bb37602",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:26"
+          },
+          {
+            "contract": "ContextUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:30"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:21"
+          },
+          {
+            "contract": "OwnableUpgradeable",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol:77"
+          },
+          {
+            "contract": "Staking",
+            "label": "token",
+            "type": "t_contract(IERC20Upgradeable)248",
+            "src": "contracts/Staking.sol:22"
+          },
+          {
+            "contract": "Staking",
+            "label": "_stakeStatus",
+            "type": "t_enum(StakeStatus)849",
+            "src": "contracts/Staking.sol:26"
+          },
+          {
+            "contract": "Staking",
+            "label": "totalStaked",
+            "type": "t_uint256",
+            "src": "contracts/Staking.sol:27"
+          },
+          {
+            "contract": "Staking",
+            "label": "stakers",
+            "type": "t_mapping(t_address,t_array(t_struct(Staker)906_storage)dyn_storage)",
+            "src": "contracts/Staking.sol:84"
+          }
+        ],
+        "types": {
+          "t_contract(IERC20Upgradeable)248": {
+            "label": "contract IERC20Upgradeable"
+          },
+          "t_enum(StakeStatus)849": {
+            "label": "enum Staking.StakeStatus",
+            "members": [
+              "ACTIVE",
+              "PAUSED",
+              "COMPLETED"
+            ]
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_address,t_array(t_struct(Staker)906_storage)dyn_storage)": {
+            "label": "mapping(address => struct Staking.Staker[])"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_array(t_struct(Staker)906_storage)dyn_storage": {
+            "label": "struct Staking.Staker[]"
+          },
+          "t_struct(Staker)906_storage": {
+            "label": "struct Staking.Staker",
+            "members": [
+              {
+                "label": "amount",
+                "type": "t_uint256"
+              },
+              {
+                "label": "reward",
+                "type": "t_uint256"
+              },
+              {
+                "label": "stakedAt",
+                "type": "t_uint256"
+              }
+            ]
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "849ddb501b9df75936361dff9d2d630e4fe3adca738b03b76faa3568e924e115": {
+      "address": "0x19fDACc3fDa00B499079Afdd28B672265f1f736C",
+      "txHash": "0x1c7f0a08f41250a6ed90ce08d4cb861efe3d7e81fe05f03dbb658e88138f0766",
       "layout": {
         "storage": [
           {

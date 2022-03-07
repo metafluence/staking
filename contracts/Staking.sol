@@ -28,48 +28,15 @@ contract Staking is Initializable, IStakeable, OwnableUpgradeable {
     uint constant CODE_NOT_FOUND = 9999999; // keeps code about not founded stake. 
 
     // FOR 3 monthes staking
-    // uint constant REWARD_PERCENTAGE  = 3; //reward percent
-    // uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
+    uint constant REWARD_PERCENTAGE  = 3; //reward percent
+    uint constant PENALTY_PERCENTAGE  = 30; //penalty percent
 
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 3; //stake time with seconds. hour * dayHour * daysCount * month
+    uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 3; //stake time with seconds. hour * dayHour * daysCount * month
 
-    // uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
-    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    // uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
-    // uint constant PENALTY_DIVISION_STEP = 90;
-    
-    // FOR 6 monthes staking
-    // uint constant REWARD_PERCENTAGE  = 10; //reward percent
-    // uint constant PENALTY_PERCENTAGE  = 35; //penalty percent
-
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 6; //stake time with seconds
-
-    // uint constant POOL_MAX_SIZE = 10_000_000 * 10 ** 18; //keep maximum pool size
-    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    // uint constant MAX_STAKING_AMOUNT = 500000 * 10 ** 18; //keep max staking amount per wallet
-    // uint constant PENALTY_DIVISION_STEP = 180;
-
-    // FOR 9 monthes staking
-    // uint constant REWARD_PERCENTAGE  = 20; //reward percent
-    // uint constant PENALTY_PERCENTAGE  = 40; //penalty percent
-
-    // uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 9; //stake time with seconds
-
-    // uint constant POOL_MAX_SIZE = 15_000_000 * 10 ** 18; //keep maximum pool size
-    // uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    // uint constant MAX_STAKING_AMOUNT = 750000 * 10 ** 18; //keep max staking amount per wallet
-    // uint constant PENALTY_DIVISION_STEP = 270;
-
-    // FOR 12 monthes staking
-    uint constant REWARD_PERCENTAGE  = 36; //reward percent
-    uint constant PENALTY_PERCENTAGE  = 45; //penalty percent
-
-    uint constant REWARD_DEADLINE_SECONDS = 3600 * 24 * 30 * 12; //stake time with seconds
-    
-    uint constant POOL_MAX_SIZE = 20_000_000 * 10 ** 18; //keep maximum pool size
+    uint constant POOL_MAX_SIZE = 5_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    uint constant MAX_STAKING_AMOUNT = 1_000_000 * 10 ** 18; //keep max staking amount per wallet
-    uint constant PENALTY_DIVISION_STEP = 360;
+    uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant PENALTY_DIVISION_STEP = 90;
 
     // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xa78775bba7a542F291e5ef7f13C6204E704A90Ba; //Token contract address

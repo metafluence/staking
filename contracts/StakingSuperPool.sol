@@ -14,6 +14,7 @@ contract StakingSuperPool is Initializable, IStakeableSuperPool, OwnableUpgradea
     modifier StakeAvailable(address _staker, uint256 _amount) {
         require(_amount >= MIN_STAKING_AMOUNT,  "staked amount must be great or equal to minimum staking amount");
         require(_stakeStatus == StakeStatus.ACTIVE, "Staking is not active");
+        require(totalStaked +  _amount <= POOL_MAX_SIZE, "reached pool max size");
         require(userTotalStakedAmount(_staker) + _amount <=  MAX_STAKING_AMOUNT,  "reached max staking amount per wallet");
         _;
     }
@@ -31,9 +32,9 @@ contract StakingSuperPool is Initializable, IStakeableSuperPool, OwnableUpgradea
     uint constant PENALTY_PERCENTAGE  = 17; //penalty percent
 
     uint constant REWARD_DEADLINE_SECONDS = 3600; //3600 * 24 * 30 * 3; //stake time with seconds.
-
+    uint constant POOL_MAX_SIZE = 50_000_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    uint constant MAX_STAKING_AMOUNT = 250000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant MAX_STAKING_AMOUNT = 10_000_000_000 * 10 ** 18; //keep max staking amount per wallet
 
     // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xa78775bba7a542F291e5ef7f13C6204E704A90Ba; //Token contract address
@@ -63,6 +64,11 @@ contract StakingSuperPool is Initializable, IStakeableSuperPool, OwnableUpgradea
 
         SafeERC20Upgradeable.safeTransferFrom(token, msg.sender, address(this), _amount);
         
+        //check stake model hash enough sapce for new staking then set stake model as completed
+        if (totalStaked >= POOL_MAX_SIZE || POOL_MAX_SIZE - totalStaked < MIN_STAKING_AMOUNT) {
+            _setStakeStatus(StakeStatus.COMPLETED);
+        }
+
         emit Stake(msg.sender, _amount);
     }
 

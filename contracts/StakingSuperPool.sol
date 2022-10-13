@@ -34,7 +34,7 @@ contract StakingSuperPool is Initializable, IStakeableSuperPool, OwnableUpgradea
     uint constant REWARD_DEADLINE_SECONDS = 3600; //3600 * 24 * 30 * 3; //stake time with seconds.
     uint constant POOL_MAX_SIZE = 50_000_000_000 * 10 ** 18; //keep maximum pool size
     uint constant MIN_STAKING_AMOUNT = 2000 * 10 ** 18 ; //keep minimum staking amount per transaction
-    uint constant MAX_STAKING_AMOUNT = 10_000_000_000 * 10 ** 18; //keep max staking amount per wallet
+    uint constant MAX_STAKING_AMOUNT = 1_000_000_000 * 10 ** 18; //keep max staking amount per wallet
 
     // wallet infos
     address constant TOKEN_CONTRACT_ADDRESS = 0xa78775bba7a542F291e5ef7f13C6204E704A90Ba; //Token contract address
